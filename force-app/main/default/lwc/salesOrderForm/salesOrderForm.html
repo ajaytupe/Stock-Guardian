@@ -1,0 +1,76 @@
+<template>
+    <lightning-card title="Create Sales Order and Line Items">
+        <div class="slds-m-around_medium">
+            <h3>Sales Order Information</h3>
+            <lightning-record-edit-form object-api-name="Sales_Order__c">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <!-- Store Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Store__c" name="Store__c" 
+                                               value={salesOrder.Store__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Discount Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Discount__c" name="Discount__c" 
+                                               value={salesOrder.Discount__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Sale Date Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sale_Date__c" name="Sale_Date__c" 
+                                               value={salesOrder.Sale_Date__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Sales Representative ID Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sales_Representative_ID__c" name="Sales_Representative_ID__c" 
+                                               value={salesOrder.Sales_Representative_ID__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Payment Type Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox label="Payment Type" name="Payment_Type__c" 
+                                            value={salesOrder.Payment_Type__c}
+                                            options={paymentTypeOptions} 
+                                            onchange={handleSalesOrderChange}></lightning-combobox>
+                    </div>
+
+                    <!-- Total Amount Field -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="number" label="Total Amount" name="Total_Amount__c"
+                                         value={salesOrder.Total_Amount__c} 
+                                         onchange={handleSalesOrderChange}></lightning-input>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+
+        <!-- Line Items and Save Button (No changes needed here) -->
+        <div class="slds-m-around_medium">
+            <h3>Line Items</h3>
+            <template for:each={lineItems} for:item="item" for:index="index">
+                <div key={item.id} class="slds-m-bottom_small slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox label="Inventory Item" name="Inventory_Item__c" data-index={index} 
+                                            value={item.Inventory_Item__c} options={inventoryItemOptions} 
+                                            onchange={handleLineItemChange}></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="number" label="Quantity" name="Quantity__c" data-index={index} 
+                                         value={item.Quantity__c} onchange={handleLineItemChange}></lightning-input>
+                    </div>
+                </div>
+            </template>
+            <lightning-button label="Add Line Item" onclick={addLineItem} variant="neutral"></lightning-button>
+        </div>
+
+        <div class="slds-m-around_medium">
+            <lightning-button label="Save" onclick={saveRecords} variant="brand"></lightning-button>
+        </div>
+    </lightning-card>
+</template>
