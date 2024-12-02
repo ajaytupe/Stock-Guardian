@@ -40,29 +40,23 @@ export default class SalesOrderForm extends LightningElement {
     handleSalesOrderChange(event) {
         const field = event.target.name;
         this.salesOrder[field] = event.target.value;
-
         // If Store__c changes, fetch new inventory items
         if (field === 'Store__c') {
             const storeId = event.target.value;
-            console.log('Store__c changed, new storeId:', storeId); // Debugging output
             this.fetchInventoryItems(storeId);
         }
     }
 
     async fetchInventoryItems(storeId) {
         this.isLoading = true;  // Start loading
-        console.log('Calling fetchInventoryItems with storeId:', storeId);
     
         try {
             // Correct the Apex method call, ensuring no duplicate declarations
             const data = await getInventoryItems({ storeID: storeId }); // Corrected parameter name
-            console.log('Received data from Apex:', data); // Debugging output
     
             // Map the response to create options for combobox
             this.inventoryItemOptions = data.map(item => ({ label: item.Name, value: item.Id }));
-            console.log('Mapped inventoryItemOptions:', this.inventoryItemOptions); // Debugging output
         } catch (error) {
-            console.error('Error fetching Inventory_Item__c records:', error); // Log any errors
             this.inventoryItemOptions = []; // Clear options if there's an error
         } finally {
             this.isLoading = false;  // Stop loading
@@ -84,10 +78,6 @@ export default class SalesOrderForm extends LightningElement {
     saveRecords() {
         // Remove the `id` field before passing lineItems to Apex
         const lineItemsForApex = this.lineItems.map(({ id, ...rest }) => rest);
-        console.log('salesOrder ====>' , this.salesOrder.Discount__c);
-        console.log('salesOrder ====>' , this.salesOrder.Sale_Date__c);
-        console.log('salesOrder ====>' , this.salesOrder.Sales_Representative_ID__c);
-        console.log('salesOrder ====>' , this.salesOrder.Total_Amount__c);
     
         createSalesOrderWithLineItems({ salesOrder: this.salesOrder, lineItems: lineItemsForApex })
             .then(() => {
