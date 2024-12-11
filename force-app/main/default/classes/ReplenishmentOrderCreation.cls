@@ -1,6 +1,11 @@
-public with sharing class ReplenishmentOrderCreation implements Schedulable {
+public without sharing class ReplenishmentOrderCreation implements Schedulable {
     
     // Constructor to start the replenishment process
+    @AuraEnabled
+    public static void triggerReplenishmentProcess() {
+        new ReplenishmentOrderCreation();
+    }
+
     public ReplenishmentOrderCreation() {
         // Fetch inventory items needing replenishment
         List<Inventory_Item__c> inventoryItems = getInventoryItems();
@@ -18,16 +23,18 @@ public with sharing class ReplenishmentOrderCreation implements Schedulable {
         List<Replenishment_Order_Line_Item__c> lineItems = createLineItems(supplierWiseItems, supplierToOrderMap);
 
         // Insert replenishment order line items
-        insertLineItems(lineItems);
+        //insertLineItems(lineItems);
 
-        sendEmailsForReplenishmentOrders(replenishmentOrders);
+        //sendEmailsForReplenishmentOrders(replenishmentOrders);
     }
 
     // Fetch inventory items needing replenishment
     private List<Inventory_Item__c> getInventoryItems() {
         return [SELECT ID, Supplier__c, Stock_Level__c, Reorder_Threshold__c, Shortage__c, One_Pack_Quantity__c
                 FROM Inventory_Item__c
-                WHERE Shortage__c > 0 AND Shortage__c != null];
+                WHERE Shortage__c > 0 AND Shortage__c != null
+                ORDER BY LastModifiedDate DESC
+                LIMIT 1];
     }
 
     // Group inventory items by Supplier ID
@@ -81,6 +88,7 @@ public with sharing class ReplenishmentOrderCreation implements Schedulable {
                 lineItems.add(lineItem);
             }
         }
+        insert lineItems;
         return lineItems;
     }
 

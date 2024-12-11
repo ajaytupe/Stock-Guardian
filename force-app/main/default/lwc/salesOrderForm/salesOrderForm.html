@@ -11,27 +11,6 @@
                                                onchange={handleSalesOrderChange}></lightning-input-field>
                     </div>
 
-                    <!-- Discount Field -->
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="Discount__c" name="Discount__c" 
-                                               value={salesOrder.Discount__c} 
-                                               onchange={handleSalesOrderChange}></lightning-input-field>
-                    </div>
-
-                    <!-- Sale Date Field -->
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="Sale_Date__c" name="Sale_Date__c" 
-                                               value={salesOrder.Sale_Date__c} 
-                                               onchange={handleSalesOrderChange}></lightning-input-field>
-                    </div>
-
-                    <!-- Sales Representative ID Field -->
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="Sales_Representative_ID__c" name="Sales_Representative_ID__c" 
-                                               value={salesOrder.Sales_Representative_ID__c} 
-                                               onchange={handleSalesOrderChange}></lightning-input-field>
-                    </div>
-
                     <!-- Payment Type Field -->
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-combobox label="Payment Type" name="Payment_Type__c" 
@@ -40,12 +19,35 @@
                                             onchange={handleSalesOrderChange}></lightning-combobox>
                     </div>
 
+                    <!-- Discount Field -->
+                    <!--div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Discount__c" name="Discount__c" 
+                                               value={salesOrder.Discount__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div-->
+
+                    <!-- Sale Date Field -->
+                    <div class="slds-col slds-size_2-of-2">
+                        <lightning-input-field field-name="Sale_Date__c" name="Sale_Date__c" 
+                                               value={salesOrder.Sale_Date__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Sales Representative ID Field -->
+                    <!--div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sales_Representative_ID__c" name="Sales_Representative_ID__c" 
+                                               value={salesOrder.Sales_Representative_ID__c} 
+                                               onchange={handleSalesOrderChange}></lightning-input-field>
+                    </div-->
+
+                    
+
                     <!-- Total Amount Field -->
-                    <div class="slds-col slds-size_1-of-2">
+                    <!--div class="slds-col slds-size_1-of-2">
                         <lightning-input type="number" label="Total Amount" name="Total_Amount__c"
                                          value={salesOrder.Total_Amount__c} 
                                          onchange={handleSalesOrderChange}></lightning-input>
-                    </div>
+                    </div-->
                 </div>
             </lightning-record-edit-form>
         </div>

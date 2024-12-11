@@ -1,5 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import createSalesOrderWithLineItems from '@salesforce/apex/SalesOrderController.createSalesOrderWithLineItems';
+import triggerReplenishmentProcess from '@salesforce/apex/ReplenishmentOrderCreation.triggerReplenishmentProcess';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
@@ -78,7 +79,7 @@ export default class SalesOrderForm extends LightningElement {
     saveRecords() {
         // Remove the `id` field before passing lineItems to Apex
         const lineItemsForApex = this.lineItems.map(({ id, ...rest }) => rest);
-    
+        console.log('1');
         createSalesOrderWithLineItems({ salesOrder: this.salesOrder, lineItems: lineItemsForApex })
             .then(() => {
                 this.dispatchEvent(
@@ -99,6 +100,8 @@ export default class SalesOrderForm extends LightningElement {
                     })
                 );
             });
+        console.log('2');
+        //triggerReplenishmentProcess()
     }
 
     
